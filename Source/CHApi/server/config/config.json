@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Panda123",
+    "database": "ChristmasHouse",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Panda123",
+    "database": "ChristmasHouse",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Panda123",
+    "database": "ChristmasHouse",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
