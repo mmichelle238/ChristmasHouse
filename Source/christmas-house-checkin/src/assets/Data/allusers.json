@@ -1,0 +1,47 @@
+[
+    {
+        "FirstName": "Ethan",
+        "LastName": "Morris",
+        "Address": "2304 195th PL SE",
+        "City": "Bothell",
+        "ZipCode": 98012,
+        "Phone": "425-345-6789",
+        "Email": "ethanmorris@gmail.com"
+    },
+    {
+        "FirstName": "Jose",
+        "LastName": "Wilson",
+        "Address": "2304 195th PL SE",
+        "City": "Bothell",
+        "ZipCode": 98012,
+        "Phone": "425-445-1662",
+        "Email": "josewilson@hotmail.com"
+    },
+    {
+        "FirstName": "Renita",
+        "LastName": "Arulnathan",
+        "Address": "2304 195th PL SE",
+        "City": "Bothell",
+        "ZipCode": 98012,
+        "Phone": "425-445-7674",
+        "Email": "renitajose@hotmail.com"
+    },
+    {
+        "FirstName": "Renita",
+        "LastName": "Arulnathan",
+        "Address": "2304 195th PL SE",
+        "City": "Bothell",
+        "ZipCode": 98012,
+        "Phone": "425-445-7674",
+        "Email": "renitajose@gmail.com"
+    },
+    {
+        "FirstName": "Michelle",
+        "LastName": "Morris",
+        "Address": "2304 195th PL SE",
+        "City": "Bothell",
+        "ZipCode": 98012,
+        "Phone": "425-215-2551",
+        "Email": "mmichelle238@gmail.com"
+    }
+]

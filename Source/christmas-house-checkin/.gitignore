@@ -8,7 +8,7 @@
 /bazel-out
 
 # dependencies
-node_modules/
+/node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -34,7 +34,7 @@ speed-measure-plugin*.json
 # misc
 /.sass-cache
 /connect.lock
-coverage/
+/coverage
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
@@ -44,7 +44,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-# NodeJS specific #
-.nyc_output/
-test/*.log
