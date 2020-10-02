@@ -75,10 +75,11 @@ CREATE FUNCTION public."FindUser"(_name text) RETURNS TABLE(firstname text, last
     LANGUAGE sql
     AS $$
 
-SELECT * FROM public."Users" 
---INNER JOIN public."CheckIn" ON public."Users"."Email" = public."CheckIn"."Email"
+SELECT public."Users"."FirstName", public."Users"."LastName", public."Users"."Address", public."Users"."City", 
+public."Users"."ZipCode" , public."Users"."Phone", public."Users"."Email", MAX(public."CheckIn"."CheckIn") 
+AS "CheckIn" FROM public."Users" NATURAL LEFT JOIN public."CheckIn" 
 WHERE LOWER(public."Users"."FirstName") LIKE LOWER(CONCAT(_name,'%'))
-OR LOWER(public."Users"."LastName") LIKE LOWER(CONCAT(_name,'%'));
+OR LOWER(public."Users"."LastName") LIKE LOWER(CONCAT(_name,'%')) GROUP BY "FirstName", "LastName", "Email"
 
 $$;
 
