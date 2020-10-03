@@ -27,9 +27,9 @@ CREATE PROCEDURE public."AddUser"(_firstname text, _lastname text, _address text
     LANGUAGE sql
     AS $$ 
 
-INSERT INTO public."Users"("FirstName", "LastName", "Address", "City", "ZipCode", "Phone", "Email")
+INSERT INTO public."Users"("firstname", "lastname", "address", "city", "zipcode", "phone", "email")
 	SELECT _firstname, _lastname, _address, _city, _zipcode, _phone, _email
-	where not exists (SELECT * FROM public."Users" where "Email" = _email);
+	where not exists (SELECT * FROM public."Users" where "email" = _email);
 
 $$;
 
@@ -45,9 +45,9 @@ CREATE PROCEDURE public."CheckInUser"(_email text)
     LANGUAGE sql
     AS $$ 
 
-Insert INTO public."CheckIn"("CheckIn", "Email") Select CURRENT_TIMESTAMP, _email 
- where not exists (SELECT 1 FROM public."CheckIn" where "Email" = _email INTERSECT
-	 SELECT 1 FROM public."CheckIn" where EXTRACT(YEAR from "CheckIn") = EXTRACT(YEAR from CURRENT_TIMESTAMP))
+Insert INTO public."CheckIn"("checkin", "email") Select CURRENT_TIMESTAMP, _email 
+ where not exists (SELECT 1 FROM public."CheckIn" where "email" = _email INTERSECT
+	 SELECT 1 FROM public."CheckIn" where EXTRACT(YEAR from "checkin") = EXTRACT(YEAR from CURRENT_TIMESTAMP))
 
 $$;
 
@@ -61,7 +61,7 @@ ALTER PROCEDURE public."CheckInUser"(_email text) OWNER TO postgres;
 
 CREATE PROCEDURE public."DeleteUser"(_email text)
     LANGUAGE sql
-    AS $$ DELETE FROM public."Users" WHERE "Email"=_email$$;
+    AS $$ DELETE FROM public."Users" WHERE "email"=_email$$;
 
 
 ALTER PROCEDURE public."DeleteUser"(_email text) OWNER TO postgres;
@@ -71,15 +71,15 @@ ALTER PROCEDURE public."DeleteUser"(_email text) OWNER TO postgres;
 -- Name: FindUser(text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public."FindUser"(_name text) RETURNS TABLE(firstname text, lastname text, address text, city text, zipcode integer, phone text, email text)
+CREATE FUNCTION public."FindUser"(_name text) RETURNS TABLE(firstname text, lastname text, address text, city text, zipcode integer, phone text, email text, checkin date)
     LANGUAGE sql
     AS $$
 
-SELECT public."Users"."FirstName", public."Users"."LastName", public."Users"."Address", public."Users"."City", 
-public."Users"."ZipCode" , public."Users"."Phone", public."Users"."Email", MAX(public."CheckIn"."CheckIn") 
-AS "CheckIn" FROM public."Users" NATURAL LEFT JOIN public."CheckIn" 
-WHERE LOWER(public."Users"."FirstName") LIKE LOWER(CONCAT(_name,'%'))
-OR LOWER(public."Users"."LastName") LIKE LOWER(CONCAT(_name,'%')) GROUP BY "FirstName", "LastName", "Email"
+SELECT public."Users"."firstname", public."Users"."lastname", public."Users"."address", public."Users"."city", 
+public."Users"."zipcode" , public."Users"."phone", public."Users"."email", MAX(public."CheckIn"."checkin") 
+AS "checkin" FROM public."Users" NATURAL LEFT JOIN public."CheckIn" 
+WHERE LOWER(public."Users"."firstname") LIKE LOWER(CONCAT(_name,'%'))
+OR LOWER(public."Users"."lastname") LIKE LOWER(CONCAT(_name,'%')) GROUP BY "firstname", "lastname", "email"
 
 $$;
 
@@ -95,9 +95,9 @@ CREATE PROCEDURE public."UpdateUser"(_firstname text, _lastname text, _address t
     LANGUAGE sql
     AS $$ 
 
-UPDATE public."Users" SET "FirstName"=_firstname, "LastName"=_lastname,"Address"=_address, 
-	"City"=_city,"ZipCode"=_zipcode,"Phone"=_phone, "Email"=_newemail
-	WHERE "Email"=_oldemail
+UPDATE public."Users" SET "firstname"=_firstname, "lastname"=_lastname,"address"=_address, 
+	"city"=_city,"zipcode"=_zipcode,"phone"=_phone, "email"=_newemail
+	WHERE "email"=_oldemail
 
 $$;
 
@@ -114,8 +114,8 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public."CheckIn" (
-    "CheckIn" date NOT NULL,
-    "Email" text NOT NULL
+    "checkin" date NOT NULL,
+    "email" text NOT NULL
 );
 
 
@@ -127,13 +127,13 @@ ALTER TABLE public."CheckIn" OWNER TO postgres;
 --
 
 CREATE TABLE public."Users" (
-    "FirstName" text NOT NULL,
-    "LastName" text NOT NULL,
-    "Address" text,
-    "City" text,
-    "ZipCode" integer,
-    "Phone" text,
-    "Email" text NOT NULL
+    "firstname" text NOT NULL,
+    "lastname" text NOT NULL,
+    "address" text,
+    "city" text,
+    "zipcode" integer,
+    "phone" text,
+    "email" text NOT NULL
 );
 
 
@@ -145,7 +145,7 @@ ALTER TABLE public."Users" OWNER TO postgres;
 -- Data for Name: CheckIn; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."CheckIn" ("CheckIn", "Email") FROM stdin;
+COPY public."CheckIn" ("checkin", "email") FROM stdin;
 2020-09-18	renitajose@hotmail.com
 2020-09-18	josewilson@hotmail.com
 2020-09-19	renitajose@gmail.com
@@ -159,7 +159,7 @@ COPY public."CheckIn" ("CheckIn", "Email") FROM stdin;
 -- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Users" ("FirstName", "LastName", "Address", "City", "ZipCode", "Phone", "Email") FROM stdin;
+COPY public."Users" ("firstname", "lastname", "address", "city", "zipcode", "phone", "email") FROM stdin;
 Ethan	Morris	2304 195th PL SE	Bothell	98012	425-345-6789	ethanmorris@gmail.com
 Jose	Wilson	2304 195th PL SE	Bothell	98012	425-445-1662	josewilson@hotmail.com
 Renita	Arulnathan	2304 195th PL SE	Bothell	98012	425-445-7674	renitajose@hotmail.com
@@ -174,7 +174,7 @@ Michelle	Morris	2304 195th PL SE	Bothell	98012	425-215-2551	mmichelle238@gmail.c
 --
 
 ALTER TABLE ONLY public."Users"
-    ADD CONSTRAINT "Users_pkey" PRIMARY KEY ("Email");
+    ADD CONSTRAINT "Users_pkey" PRIMARY KEY ("email");
 
 
 --
@@ -183,7 +183,7 @@ ALTER TABLE ONLY public."Users"
 --
 
 ALTER TABLE ONLY public."CheckIn"
-    ADD CONSTRAINT fk_email FOREIGN KEY ("Email") REFERENCES public."Users"("Email") ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT fk_email FOREIGN KEY ("email") REFERENCES public."Users"("email") ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 -- Completed on 2020-09-20 22:48:04

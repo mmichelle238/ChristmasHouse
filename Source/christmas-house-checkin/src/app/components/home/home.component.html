@@ -27,19 +27,19 @@
         <tbody>
         <tr *ngFor="let user of allusers">
         <th scope="row">{{ user.id }}</th>
-        <td>{{ user.FirstName }}</td>
-        <td>{{ user.LastName }}</td>
-        <td>{{ user.Address }}</td>
-        <td>{{ user.City }}</td>
-        <td>{{ user.ZipCode }}</td>
-        <td>{{ user.Phone }}</td>
-        <td>{{ user.Email }}</td>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.address }}</td>
+        <td>{{ user.city }}</td>
+        <td>{{ user.zipcode }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.email }}</td>
         <td>
             <div *ngIf="isChecked(user); else elseBlock" >
                 <button class="btn btn-outline-secondary" id="button" type="button" 
                 (click)="handleCheckIn(user)" >Check In</button>
             </div>
-            <ng-template #elseBlock>{{user.CheckIn | date:'shortDate'}}</ng-template>
+            <ng-template #elseBlock>{{user.checkin | date:'shortDate'}}</ng-template>
         </td>
         </tr>
         </tbody>

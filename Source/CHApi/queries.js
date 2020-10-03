@@ -22,15 +22,15 @@ const findUser = (request, response) => {
 }
 
 const addUser = (request, response) => {
-    const{FirstName,LastName,Address,City,ZipCode,Phone,Email} = request.body
+    const{firstname,lastname,address,city,zipcode,phone,email} = request.body
 
     pool.query('CALL public."AddUser"($1, $2, $3, $4, $5, $6, $7)', 
-        [FirstName,LastName,Address,City,ZipCode,Phone,Email], 
+        [firstname,lastname,address,city,zipcode,phone,email], 
             (error, results) => {
       if (error) {
         throw error
       }
-      response.status(201).send(`{ "FirstName" : "${FirstName}"}`)
+      response.status(201).send(`{ "firstname" : "${firstname}"}`)
     })
 }
 

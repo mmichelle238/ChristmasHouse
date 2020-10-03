@@ -67,7 +67,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "christmas-house-checkin:build:production"
+              "browserTarget": "christmas-house-checkin:build:production",
+              "proxyConfig": "proxy.conf.json"
             }
           }
         },

@@ -56,14 +56,14 @@ export class HomeComponent implements OnInit {
   }
 
   handleCheckIn(user: User) {
-    this.api.checkIn(user.Email).subscribe(resp => {
+    this.api.checkIn(user.email).subscribe(resp => {
       var x = document.getElementById("message");
-      x.innerHTML = `${user.FirstName} ${user.LastName} with the email ${user.Email} checked in!`;
+      x.innerHTML = `${user.firstname} ${user.lastname} with the email ${user.email} checked in!`;
     });
   }
 
   isChecked(user: User) {
-    const date: Date = user.CheckIn;
+    const date: Date = user.checkin;
     const curDate: Date = new Date();
     return (date == null || curDate.getFullYear > date.getFullYear);
   }
