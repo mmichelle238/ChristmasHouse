@@ -22,6 +22,7 @@
         <th scope="col">Phone</th>
         <th scope="col">Email</th>
         <th scope="col">Check In</th>
+        <th scope="col">Update User</th>
         </tr>
         </thead>
         <tbody>
@@ -36,11 +37,13 @@
         <td>{{ user.email }}</td>
         <td>
             <div *ngIf="isChecked(user); else elseBlock" >
-                <button class="btn btn-outline-secondary" id="button" type="button" 
+                <button class="btn btn-outline-secondary" id="checkInButton" type="button" 
                 (click)="handleCheckIn(user)" >Check In</button>
             </div>
             <ng-template #elseBlock>{{user.checkin | date:'shortDate'}}</ng-template>
         </td>
+        <td><button class="btn btn-outline-secondary" id="updateButton" type="button" 
+            (click)="handleUpdate(user.email)" >Update</button></td>
         </tr>
         </tbody>
     </table>

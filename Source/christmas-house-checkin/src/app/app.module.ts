@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 import { AdduserComponent } from './components/adduser/adduser.component';
 import { AllusersComponent } from './components/allusers/allusers.component';
+import { UpdateuserComponent } from './components/updateuser/updateuser.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AllusersComponent } from './components/allusers/allusers.component';
     AppComponent,
     HomeComponent,
     AdduserComponent,
-    AllusersComponent
+    AllusersComponent,
+    UpdateuserComponent
   ],
   imports: [
     BrowserModule,

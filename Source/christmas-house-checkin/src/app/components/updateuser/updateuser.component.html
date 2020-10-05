@@ -1,1 +1,61 @@
-<p>updateuser works!</p>
+<h1>Update User</h1>
+
+<form #userForm="ngForm" (ngSubmit)="userForm.form.valid && onSubmit(userForm)">
+    <p style="margin-left: 2.5em;padding: 0 7em 2em 0;"></p>
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="First Name" aria-label="First Name" 
+          name="firstname" [(ngModel)]="model.firstname" #firstname="ngModel"
+          [ngClass]="{ 'is-invalid': userForm.submitted && firstname.invalid }" required>
+          <div class="invalid-feedback" *ngIf="userForm.submitted && firstname.invalid">
+              <p *ngIf="firstname.errors.required">First name is required</p>
+          </div> 
+      </div>
+  
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" 
+          name="lastname" [(ngModel)]="model.lastname" #lastname="ngModel"
+          [ngClass]="{ 'is-invalid': userForm.submitted && lastname.invalid }" required>
+        <div class="invalid-feedback" *ngIf="userForm.submitted && lastname.invalid">
+          <p *ngIf="lastname.errors.required">Last name is required</p>
+        </div>
+      </div>
+    
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="Address" aria-label="Address" 
+          name="address" [(ngModel)]="model.address" >
+      </div>
+  
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="City" aria-label="City" 
+          name="city" [(ngModel)]="model.city" >
+      </div>
+  
+      <div class="form-group">
+          <input type="int" class="form-control" placeholder="ZipCode" aria-label="ZipCode"
+           name="zipcode" [(ngModel)]="model.zipcode" >
+      </div>
+  
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="Phone" aria-label="Phone" 
+          name="phone" [(ngModel)]="model.phone" >
+      </div>
+  
+      <div class="form-group">
+        <input type="email" class="form-control" placeholder="Email" aria-label="Email"
+        name="email" id="email" [(ngModel)]="model.email" #email="ngModel"
+        [ngClass]="{ 'is-invalid': userForm.submitted && email.invalid }" email required>
+          <div *ngIf="userForm.submitted && email.invalid" class="invalid-feedback">
+              <div *ngIf="email.errors.required">Email is required</div>
+              <div *ngIf="email.errors.email">Must be a valid email address</div>
+          </div>
+      </div>
+  
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">Check In</label>
+      </div>
+    
+      <div class="form-group">
+        <button class="btn btn-danger btn-block">Submit</button>
+      </div>
+  </form>

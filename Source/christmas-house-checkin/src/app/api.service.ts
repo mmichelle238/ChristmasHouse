@@ -25,4 +25,8 @@ export class ApiService {
       `${this.rootURL}/users/${name}`, { observe: 'response' });
   }
 
+  updateUser(oldemail: String, user: User): Observable<User> {
+    return this.http.put<User>(`${this.rootURL}/users/${oldemail}`, user)
+  }
+
 }

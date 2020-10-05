@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute} from '@angular/router';
 
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ApiService } from './../../api.service';
 import { User } from './../../user';
 
@@ -19,7 +22,7 @@ export class HomeComponent implements OnInit {
   headers: any;
   name: string;
 
-  constructor(private api : ApiService) {
+  constructor(private api : ApiService, private route: ActivatedRoute, private router: Router) {
   }
 
   update(value: string) {
@@ -68,7 +71,10 @@ export class HomeComponent implements OnInit {
     return (date == null || curDate.getFullYear > date.getFullYear);
   }
 
-  ngOnInit(): void {
+  handleUpdate(email: string) {
+    this.router.navigate(['/updateuser', { emailId: email }]);
   }
 
+  ngOnInit(): void {
+  }
 }
