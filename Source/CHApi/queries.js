@@ -46,9 +46,9 @@ const checkInUser = (request, response) => {
 }
 
 const updateUser = (request, response) => {
-    const oldemail = request.params.oldemail
+    const oldemail = request.params.name
     const {firstname,lastname,address,city,zipcode,phone,email} = request.body
-  
+    
     pool.query(
       'CALL public."UpdateUser"($1,$2,$3,$4,$5,$6,$7,$8)',
       [firstname,lastname,address,city,zipcode,phone,email,oldemail],
@@ -61,7 +61,7 @@ const updateUser = (request, response) => {
 }
 
 const deleteUser = (request, response) => {
-    const email = request.params.email
+    const email = request.params.name
   
     pool.query('CALL public."DeleteUser"(email)', [email], (error, results) => {
       if (error) {

@@ -17,15 +17,16 @@ export class AdduserComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     var element = <HTMLInputElement> document.getElementById('defaultCheck1');
-    let email : string = (<HTMLInputElement> document.getElementById('email')).value;
+    var currentUser: User = form.value;
+
     this.api
-     .addUser(form.value)
+     .addUser(currentUser)
      .subscribe(resp => {
         if(element.checked) {
-          this.api.checkIn(email).subscribe(resp => {
-          });  
+          this.api.checkIn(currentUser.email).subscribe(resp => {
+          });
         }
-    });  
+    });
   }
 
   ngOnInit(): void {
