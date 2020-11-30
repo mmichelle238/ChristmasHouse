@@ -10,7 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AdduserComponent } from './components/adduser/adduser.component';
 import { AllusersComponent } from './components/allusers/allusers.component';
 import { UpdateuserComponent } from './components/updateuser/updateuser.component';
-
+import { GridModule, ExcelModule } from '@progress/kendo-angular-grid';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { UpdateuserComponent } from './components/updateuser/updateuser.componen
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    GridModule,
+    ExcelModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

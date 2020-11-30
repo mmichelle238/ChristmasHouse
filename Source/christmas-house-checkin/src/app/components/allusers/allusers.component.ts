@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './../../api.service';
+import { GridDataResult, DataStateChangeEvent } from '@progress/kendo-angular-grid';
+import { process, State } from '@progress/kendo-data-query';
+import { ExcelExportData } from '@progress/kendo-angular-excel-export';
 
+import { ApiService } from './../../api.service';
 import { User } from './../../user';
 
 @Component({
@@ -10,38 +13,53 @@ import { User } from './../../user';
 })
 export class AllusersComponent implements OnInit {
 
-  page = 1;
-  pageSize = 4;
-  collectionSize = 0;
-  allusers: User[] = [];
+  public gridView: GridDataResult;
+
+  public state: State = {
+    skip: 0,
+    take: 5,
+
+    // Initial filter descriptor
+    filter: {
+      logic: 'and',
+      filters: [{ field: 'firstname', operator: 'contains', value: '' }]
+    }
+  };
+
   fetchedUsers: User[] = [];
-  headers: any;
 
   constructor(private api: ApiService) {
+    this.allData = this.allData.bind(this);
     this.getAllUsers();
   }
 
   getAllUsers() {
     this.api.findUser('%20')
       .subscribe(resp => {
-        const keys = resp.headers.keys();
-        this.headers = keys.map(key =>
-          `${key}: ${resp.headers.get(key)}`);
         for (const data of resp.body) {
           this.fetchedUsers.push(data);
         }
-        this.collectionSize = this.fetchedUsers.length;
-        this.refreshAllUsers();
+        this.loadItems();
       });
-  }
-
-  refreshAllUsers() {
-    this.allusers  = this.fetchedUsers
-      .map((user, i) => ({id: i + 1, ...user}))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
   ngOnInit(): void {
   }
 
+  public dataStateChange(state: DataStateChangeEvent): void {
+    this.state = state;
+    this.gridView = process(this.fetchedUsers, this.state);
+  }
+
+  public allData(): ExcelExportData {
+    const result: ExcelExportData =  {
+        data: process(this.fetchedUsers, { sort: [{ field: 'lastname', dir: 'asc' }] }).data,
+    };
+
+    return result;
+  }
+
+  private loadItems(): void {
+    this.gridView = process(this.fetchedUsers, this.state);
+  }
 }

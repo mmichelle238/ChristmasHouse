@@ -1,39 +1,37 @@
 <p style="margin-left: 2.5em;padding: 0 7em 2em 0;"></p>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">FirstName</th>
-    <th scope="col">LastName</th>
-    <th scope="col">Address</th>
-    <th scope="col">City</th>
-    <th scope="col">ZipCode</th>
-    <th scope="col">Phone</th>
-    <th scope="col">Email</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of allusers">
-    <th scope="row">{{ user.id }}</th>
-    <td>{{ user.firstname }}</td>
-    <td>{{ user.lastname }}</td>
-    <td>{{ user.address }}</td>
-    <td>{{ user.city }}</td>
-    <td>{{ user.zipcode }}</td>
-    <td>{{ user.phone }}</td>
-    <td>{{ user.email }}</td>
-  </tr>
-  </tbody>
-</table>
-
-<div class="d-flex justify-content-between p-2">
-  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshAllUsers()">
-  </ngb-pagination>
-
-  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshAllUsers()">
-    <option [ngValue]="2">2 items per page</option>
-    <option [ngValue]="4">4 items per page</option>
-    <option [ngValue]="6">6 items per page</option>
-  </select>
-</div>
+<kendo-grid [data]="gridView"
+  [pageSize]="state.take"
+  [skip]="state.skip"
+  [sort]="state.sort"
+  [filter]="state.filter"
+  [sortable]="true"
+  [pageable]="true"
+  [filterable]="true"
+  (dataStateChange)="dataStateChange($event)">
+  <ng-template kendoGridToolbarTemplate>
+    <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+  </ng-template>
+  <kendo-grid-column field="firstname" title="First Name" width="250">
+  </kendo-grid-column>
+  <kendo-grid-column field="lastname" title="Last Name" width="250">
+  </kendo-grid-column>
+  <kendo-grid-column field="address" title="Address" width="250">
+  </kendo-grid-column>
+  <kendo-grid-column field="city" title="City" width="80">
+  </kendo-grid-column>
+  <kendo-grid-column field="zipcode" title="ZipCode" width="80">
+  </kendo-grid-column>
+  <kendo-grid-column field="phone" title="Phone" width="120">
+  </kendo-grid-column>
+  <kendo-grid-column field="email" title="Email" width="120">
+  </kendo-grid-column>
+  <kendo-grid-column field="checkin" title="Last Checkin" width="120">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <span>
+        {{ dataItem.checkin | date:'medium' }}
+      </span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-excel fileName="AllUsers.xlsx" [fetchData]="allData"></kendo-grid-excel>
+</kendo-grid>
